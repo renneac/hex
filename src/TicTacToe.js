@@ -36,7 +36,7 @@ export const s = {
     height: '150px',
     width: '150px',
     margin: '10px',
-    backgroundColor: '#FF6B00',
+    backgroundColor: '#006B00',
     border: '4px solid #006600',
     transition: 'background-color 0.3s, color 0.3s',
   }),
