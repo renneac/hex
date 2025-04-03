@@ -21,7 +21,7 @@ const globalStyles = css`
     background-color: #e3f2fd;
   }
   p {
-    color: #1e88e5;
+    color: rgb(30, 229, 129);
   }
   button {
     background-color: #1976d2;
