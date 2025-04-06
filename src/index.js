@@ -10,6 +10,9 @@ import { css, Global } from '@emotion/react'
 //////////////////////////////////////////
 //css
 //////////////////////////////////////////
+
+// @todo refactoring .theme
+
 const globalStyles = css`
   * {
     margin: 0;
@@ -53,6 +56,10 @@ export const s = {
     },
   }),
 }
+
+// @todo refactoring .theme - END
+
+// @todo refactoring .local (li + link)
 
 export const App = () => {
   return (
@@ -101,6 +108,8 @@ export const App = () => {
     </div>
   )
 }
+
+// @todo refactoring .local (li + link) - END
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(<RoutesList />)

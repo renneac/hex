@@ -10,6 +10,9 @@ import ghost from './images/ghost.png'
 //////////////////////////////////////////////////////////////////////////////
 //// CSS
 //////////////////////////////////////////////////////////////////////////////
+
+// @todo refactoring .theme
+
 const globalStyles = css`
   * {
     margin: 0;
@@ -46,6 +49,8 @@ export const s = {
   }),
 }
 
+// @todo refactoring .theme - END
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
@@ -63,7 +68,9 @@ export const TicTacToe = () => {
   let square
   let cellIndex = 1
 
+  //@todo CreateGrid refactoring .reusable
   const CreateGrid = () => {
+    //@todo unused var ?
     let newGrid = []
 
     for (let i = 0; i < rows; i++) {
@@ -97,6 +104,7 @@ export const TicTacToe = () => {
 
   const ProceedTurn = index => {
     if (!endGame) {
+      //@todo - unused code ?
       // if (document.getElementById(index).innerHTML === '-') {
       //   document.getElementById(index).innerHTML = isFirstPlayerTurn ? player1 : player2
       // }
@@ -134,6 +142,7 @@ export const TicTacToe = () => {
       const [a, b, c] = winLines[i]
       if (grid[a] && grid[a] === grid[b] && grid[a] === grid[c]) {
         grid[a] !== '-' ? (setWinner(isFirstPlayerTurn ? player2 : player1), setEndGame(true)) : ''
+        //@todo - remove console.log
         console.log(winLines[i])
         return grid[a]
       }
@@ -141,16 +150,19 @@ export const TicTacToe = () => {
 
     if (!grid.includes('-')) {
       setEndGame(true)
+      //@todo - remove console.log
       console.log('Remiza')
     }
   }
 
+  //@todo - unused code ?
   // useEffect(() => {
   //   console.log(currentGrid)
   //   winCheck(currentGrid) === '-' ? console.log('Stale nikto.') : console.log(winCheck(currentGrid))
   // }, [isFirstPlayerTurn])
 
   useEffect(() => {
+    //@todo - remove console.log
     console.log(currentGrid)
     winCheck(currentGrid) === '-' ? console.log('Stale nikto.') : console.log(winCheck(currentGrid))
   }, [isFirstPlayerTurn])

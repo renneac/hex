@@ -11,6 +11,9 @@ import scissors from './images/scissors.png'
 ////////////////////////////////////////////////////////
 //css
 ////////////////////////////////////////////////////////
+
+// @todo refactoring .theme
+
 const globalStyles = css`
   * {
     margin: 0;
@@ -73,6 +76,8 @@ export const s = {
   }),
 }
 
+// @todo refactoring .theme - END
+
 ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
 
@@ -108,6 +113,7 @@ export const RockPaperScissors = () => {
     }
   }
 
+  //@todo - remove console.log
   console.log(rock)
 
   return (

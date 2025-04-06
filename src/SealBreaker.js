@@ -7,6 +7,9 @@ import { useState, useEffect } from 'react'
 //////////////////////////////////////////////////////////////////////////////
 //// CSS
 //////////////////////////////////////////////////////////////////////////////
+
+// @todo refactoring .theme
+
 const globalStyles = css`
   * {
     margin: 0;
@@ -43,6 +46,8 @@ export const s = {
   }),
 }
 
+// @todo refactoring .theme - END
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
@@ -54,7 +59,9 @@ export const SealBreaker = () => {
   let square
   let cellIndex = 1
 
+  //@todo CreateGrid refactoring .reusable
   const CreateGrid = () => {
+    //@todo unused var ?
     let newGrid = []
 
     for (let i = 0; i < rows; i++) {
@@ -79,10 +86,16 @@ export const SealBreaker = () => {
 
   const ProceedTurn = index => {
     if (!endGame) {
+      //@todo - remove console.log
       console.log(index)
       console.log(rows * columns - columns)
 
       setTurns(turns + 1)
+
+      ////////////////////////////////////////////////////////////
+      //@todo refactoring Fn - SwitchTarget.. to much ifs
+      ////////////////////////////////////////////////////////////
+
       SwitchTarget(index, 0)
 
       // stred vrchnej casti
@@ -132,7 +145,15 @@ export const SealBreaker = () => {
         SwitchTarget(index, 1)
         SwitchTarget(index, -1)
       }
+
+      ////////////////////////////////////////////////////////////
+      //@todo refactoring Fn - SwitchTarget.. to much ifs - END
+      ////////////////////////////////////////////////////////////
+
+      //@todo - remove console.log
       console.log(columns)
+
+      //@todo - unused code ?
       // SwitchTarget(index, -1)
 
       // SwitchTarget(index, rows)
@@ -159,6 +180,8 @@ export const SealBreaker = () => {
       document.getElementById(Number(index) + shift).innerHTML = ''
     }
   }
+
+  //@todo - unused code ?
 
   // ?????
   // useEffect(() =>
