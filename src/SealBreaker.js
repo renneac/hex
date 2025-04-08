@@ -61,9 +61,6 @@ export const SealBreaker = () => {
 
   //@todo CreateGrid refactoring .reusable
   const CreateGrid = () => {
-    //@todo unused var ?
-    let newGrid = []
-
     for (let i = 0; i < rows; i++) {
       for (let x = 0; x < columns; x++) {
         square = <button id={cellIndex} value={cellIndex} css={s.button}></button>
@@ -86,10 +83,6 @@ export const SealBreaker = () => {
 
   const ProceedTurn = index => {
     if (!endGame) {
-      //@todo - remove console.log
-      console.log(index)
-      console.log(rows * columns - columns)
-
       setTurns(turns + 1)
 
       ////////////////////////////////////////////////////////////
@@ -150,15 +143,6 @@ export const SealBreaker = () => {
       //@todo refactoring Fn - SwitchTarget.. to much ifs - END
       ////////////////////////////////////////////////////////////
 
-      //@todo - remove console.log
-      console.log(columns)
-
-      //@todo - unused code ?
-      // SwitchTarget(index, -1)
-
-      // SwitchTarget(index, rows)
-      // SwitchTarget(index, -rows)
-
       let newGridState = []
       for (let x = 0; x < 9; x++) {
         newGridState.push(document.getElementById(x + 1).innerHTML)
@@ -180,14 +164,6 @@ export const SealBreaker = () => {
       document.getElementById(Number(index) + shift).innerHTML = ''
     }
   }
-
-  //@todo - unused code ?
-
-  // ?????
-  // useEffect(() =>
-  //   console.log(currentGrid)
-  //   winCheck(currentGrid) === '-' ? console.log('Stale nikto.') : console.log(winCheck(currentGrid))
-  // }, [isFirstPlayerTurn])
 
   return (
     <div>

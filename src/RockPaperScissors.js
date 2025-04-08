@@ -113,9 +113,6 @@ export const RockPaperScissors = () => {
     }
   }
 
-  //@todo - remove console.log
-  console.log(rock)
-
   return (
     <div css={s.buttonContainer}>
       <Global styles={globalStyles} />
@@ -127,7 +124,6 @@ export const RockPaperScissors = () => {
 
       <p>
         {playerWins !== 3 && computerWins !== 3 ? (
-          // ? `Hráč ${playerWins} : ${computerWins} Počítač`
           <div css={s.scoreContainer}>
             <span css={s.left}>Hráč</span>{' '}
             <span css={s.centerText}>
@@ -147,12 +143,6 @@ export const RockPaperScissors = () => {
         <img css={s.img} src={optionsImages[opponentChoice]} />
       </p>
 
-      {/* <p>
-        Hráč zvolil: {options[userChoice]} {userChoice}
-      </p>
-      <p>
-        Počítač zvolil: {options[opponentChoice]} {opponentChoice}
-      </p> */}
       <p>{result}</p>
     </div>
   )

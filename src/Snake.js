@@ -145,7 +145,6 @@ export const Snake = () => {
   const CheckSubmit = e => {
     e.key ? (e = e.key.toLowerCase()) : (e = e.toLowerCase())
 
-    console.log(e)
     if (!endGame) {
       // left
       if (e === 'a' || e === 'arrowleft') {
@@ -157,7 +156,6 @@ export const Snake = () => {
             setEndGame(true)
           } else {
             PossibleMove(-1)
-            console.log('vlavo')
           }
         }
       }
@@ -171,7 +169,6 @@ export const Snake = () => {
             setEndGame(true)
           } else {
             PossibleMove(1)
-            console.log('vpravo')
           }
         }
       }
@@ -185,7 +182,6 @@ export const Snake = () => {
             setEndGame(true)
           } else {
             PossibleMove(-columns)
-            console.log('hore')
           }
         }
       }
@@ -199,7 +195,6 @@ export const Snake = () => {
             setEndGame(true)
           } else {
             PossibleMove(columns)
-            console.log('dole')
           }
         }
       }

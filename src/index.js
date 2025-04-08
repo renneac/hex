@@ -29,7 +29,7 @@ export const s = {
     justifyContent: 'center',
     alignItems: 'center',
     background: 'linear-gradient(135deg, #2e2e2e, #1a1a1a)',
-    color: '#ffffff', //biela
+    color: '#ffffff',
     fontFamily: "'Arial', sans-serif",
   }),
   heading: css({

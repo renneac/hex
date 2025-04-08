@@ -70,9 +70,6 @@ export const TicTacToe = () => {
 
   //@todo CreateGrid refactoring .reusable
   const CreateGrid = () => {
-    //@todo unused var ?
-    let newGrid = []
-
     for (let i = 0; i < rows; i++) {
       for (let x = 0; x < columns; x++) {
         square = (
@@ -104,11 +101,6 @@ export const TicTacToe = () => {
 
   const ProceedTurn = index => {
     if (!endGame) {
-      //@todo - unused code ?
-      // if (document.getElementById(index).innerHTML === '-') {
-      //   document.getElementById(index).innerHTML = isFirstPlayerTurn ? player1 : player2
-      // }
-
       if (document.getElementById(index).innerHTML === '-') {
         document.getElementById(index).innerHTML = isFirstPlayerTurn
           ? `<img src="${player1}" alt="Hráč 1">`
@@ -142,28 +134,16 @@ export const TicTacToe = () => {
       const [a, b, c] = winLines[i]
       if (grid[a] && grid[a] === grid[b] && grid[a] === grid[c]) {
         grid[a] !== '-' ? (setWinner(isFirstPlayerTurn ? player2 : player1), setEndGame(true)) : ''
-        //@todo - remove console.log
-        console.log(winLines[i])
         return grid[a]
       }
     }
 
     if (!grid.includes('-')) {
       setEndGame(true)
-      //@todo - remove console.log
-      console.log('Remiza')
     }
   }
 
-  //@todo - unused code ?
-  // useEffect(() => {
-  //   console.log(currentGrid)
-  //   winCheck(currentGrid) === '-' ? console.log('Stale nikto.') : console.log(winCheck(currentGrid))
-  // }, [isFirstPlayerTurn])
-
   useEffect(() => {
-    //@todo - remove console.log
-    console.log(currentGrid)
     winCheck(currentGrid) === '-' ? console.log('Stale nikto.') : console.log(winCheck(currentGrid))
   }, [isFirstPlayerTurn])
 

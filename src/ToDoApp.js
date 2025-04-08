@@ -121,7 +121,6 @@ export const ToDoApp = () => {
   // add task
   const [inputValue, setInputValue] = useState('')
   const [newTask, setNewTask] = useState()
-  console.log(todoList)
 
   // update task
   const [editing, setEditing] = useState(false)
