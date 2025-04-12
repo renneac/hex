@@ -7,6 +7,8 @@ import { useState, useEffect } from 'react'
 import pumpkin from './images/pumpkin.png'
 import ghost from './images/ghost.png'
 
+import { CreateGrid } from './Reusable'
+
 //////////////////////////////////////////////////////////////////////////////
 //// CSS
 //////////////////////////////////////////////////////////////////////////////
@@ -63,31 +65,7 @@ export const TicTacToe = () => {
   //
   const rows = 3
   const columns = 3
-  let grid = []
-  let row = []
-  let square
-  let cellIndex = 1
-
-  //@todo CreateGrid refactoring .reusable
-  const CreateGrid = () => {
-    for (let i = 0; i < rows; i++) {
-      for (let x = 0; x < columns; x++) {
-        square = (
-          <button id={cellIndex} value={cellIndex} css={s.button}>
-            -
-          </button>
-        )
-        row.push(square)
-        cellIndex++
-      }
-      grid.push(row)
-      row = []
-    }
-
-    return grid
-  }
-
-  CreateGrid()
+  let grid = CreateGrid(rows, columns)
 
   //3. Hraci
   const player1 = pumpkin

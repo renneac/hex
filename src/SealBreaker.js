@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom/client'
 
 import { useState, useEffect } from 'react'
 
+import { CreateGrid } from './Reusable'
+
 //////////////////////////////////////////////////////////////////////////////
 //// CSS
 //////////////////////////////////////////////////////////////////////////////
@@ -54,94 +56,111 @@ export const s = {
 export const SealBreaker = () => {
   const rows = 3
   const columns = 3
-  let grid = []
-  let row = []
-  let square
-  let cellIndex = 1
-
-  //@todo CreateGrid refactoring .reusable
-  const CreateGrid = () => {
-    for (let i = 0; i < rows; i++) {
-      for (let x = 0; x < columns; x++) {
-        square = <button id={cellIndex} value={cellIndex} css={s.button}></button>
-        row.push(square)
-        cellIndex++
-      }
-      grid.push(row)
-      row = []
-    }
-
-    return grid
-  }
-
-  CreateGrid()
+  let grid = CreateGrid(rows, columns)
 
   //4 tahy
   const [currentGrid, setCurrentGrid] = useState([''])
   const [endGame, setEndGame] = useState(false)
   const [turns, setTurns] = useState(0)
 
+  //////////////////////////////////////////////////////////////////////////////
+  //// Stare ProceedTurn zaciatok - vymazat?
+  //////////////////////////////////////////////////////////////////////////////
+  // const ProceedTurn = index => {
+  //   if (!endGame) {
+  //     setTurns(turns + 1)
+
+  //     ////////////////////////////////////////////////////////////
+  //     //@todo refactoring Fn - SwitchTarget.. to much ifs
+  //     ////////////////////////////////////////////////////////////
+
+  //     SwitchTarget(index, 0)
+
+  //     // stred vrchnej casti
+  //     if (index > 1 && index < columns) {
+  //       SwitchTarget(index, -1)
+  //       SwitchTarget(index, 1)
+  //       SwitchTarget(index, columns)
+  //     } else if (index < rows * columns && index > rows * columns - columns + 1) {
+  //       // stred spodnej casti
+  //       SwitchTarget(index, 1)
+  //       SwitchTarget(index, -1)
+  //       SwitchTarget(index, -columns)
+  //     }
+
+  //     // prava strana
+  //     else if (Number(index) % columns === 0) {
+  //       SwitchTarget(index, -1)
+  //       if (Number(index) === columns * rows) {
+  //         // pravy dolny roh
+  //         SwitchTarget(index, -columns)
+  //       } else if (Number(index) === columns) {
+  //         // pravy horny roh
+  //         SwitchTarget(index, columns)
+  //       } else {
+  //         SwitchTarget(index, columns)
+  //         SwitchTarget(index, -columns)
+  //       }
+  //     }
+  //     ////////////////// lava strana//////////////////
+  //     else if (Number(index) % columns === 1) {
+  //       SwitchTarget(index, 1)
+  //       if (Number(index) === (rows - 1) * columns + 1) {
+  //         // lavy dolny roh
+  //         SwitchTarget(index, -columns)
+  //       } else if (Number(index) === 1) {
+  //         // lavy horny roh
+  //         SwitchTarget(index, columns)
+  //       } else {
+  //         // lava strana stred
+  //         SwitchTarget(index, columns)
+  //         SwitchTarget(index, -columns)
+  //       }
+  //     } else {
+  //       //stred stred
+  //       SwitchTarget(index, columns)
+  //       SwitchTarget(index, -columns)
+  //       SwitchTarget(index, 1)
+  //       SwitchTarget(index, -1)
+  //     }
+
+  //     ////////////////////////////////////////////////////////////
+  //     //@todo refactoring Fn - SwitchTarget.. to much ifs - END
+  //     ////////////////////////////////////////////////////////////
+
+  //     let newGridState = []
+  //     for (let x = 0; x < 9; x++) {
+  //       newGridState.push(document.getElementById(x + 1).innerHTML)
+  //       setCurrentGrid(newGridState)
+  //     }
+  //   }
+  // }
+  //////////////////////////////////////////////////////////////////////////////
+  //// Stare ProceedTurn Koniec - vymazat?
+  //////////////////////////////////////////////////////////////////////////////
+
   const ProceedTurn = index => {
     if (!endGame) {
       setTurns(turns + 1)
 
-      ////////////////////////////////////////////////////////////
-      //@todo refactoring Fn - SwitchTarget.. to much ifs
-      ////////////////////////////////////////////////////////////
-
-      SwitchTarget(index, 0)
-
-      // stred vrchnej casti
-      if (index > 1 && index < columns) {
-        SwitchTarget(index, -1)
-        SwitchTarget(index, 1)
-        SwitchTarget(index, columns)
-      } else if (index < rows * columns && index > rows * columns - columns + 1) {
-        // stred spodnej casti
-        SwitchTarget(index, 1)
-        SwitchTarget(index, -1)
-        SwitchTarget(index, -columns)
+      // Definícia susedov pre každú pozíciu (index 1-9)
+      const neighbors = {
+        1: [1, 2, 4], // Lavy horny roh
+        2: [2, 1, 3, 5], // Stred hornej casti
+        3: [3, 2, 6], // Pravy horny roh
+        4: [4, 1, 5, 7], // Stred lavy
+        5: [5, 2, 4, 6, 8], // Stred stred
+        6: [6, 3, 5, 9], // Stred pravy
+        7: [7, 4, 8], // Lavy dolny roh
+        8: [8, 5, 7, 9], // Stred dolnej casti
+        9: [9, 6, 8], // Pravy dolny roh
       }
 
-      // prava strana
-      else if (Number(index) % columns === 0) {
-        SwitchTarget(index, -1)
-        if (Number(index) === columns * rows) {
-          // pravy dolny roh
-          SwitchTarget(index, -columns)
-        } else if (Number(index) === columns) {
-          // pravy horny roh
-          SwitchTarget(index, columns)
-        } else {
-          SwitchTarget(index, columns)
-          SwitchTarget(index, -columns)
-        }
+      if (neighbors[index]) {
+        neighbors[index].forEach(neighborIndex => {
+          SwitchTarget(neighborIndex, 0)
+        })
       }
-      ////////////////// lava strana//////////////////
-      else if (Number(index) % columns === 1) {
-        SwitchTarget(index, 1)
-        if (Number(index) === (rows - 1) * columns + 1) {
-          // lavy dolny roh
-          SwitchTarget(index, -columns)
-        } else if (Number(index) === 1) {
-          // lavy horny roh
-          SwitchTarget(index, columns)
-        } else {
-          // lava strana stred
-          SwitchTarget(index, columns)
-          SwitchTarget(index, -columns)
-        }
-      } else {
-        //stred stred
-        SwitchTarget(index, columns)
-        SwitchTarget(index, -columns)
-        SwitchTarget(index, 1)
-        SwitchTarget(index, -1)
-      }
-
-      ////////////////////////////////////////////////////////////
-      //@todo refactoring Fn - SwitchTarget.. to much ifs - END
-      ////////////////////////////////////////////////////////////
 
       let newGridState = []
       for (let x = 0; x < 9; x++) {

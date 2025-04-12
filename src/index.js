@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import * as theme from './theme'
 
 import { Link } from 'react-router-dom'
 
@@ -7,19 +8,11 @@ import ReactDOM from 'react-dom/client'
 
 import { css, Global } from '@emotion/react'
 
-//////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 //css
-//////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
 // @todo refactoring .theme
-
-const globalStyles = css`
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: content-box;
-  }
-`
 
 export const s = {
   mainBody: css({
@@ -28,30 +21,32 @@ export const s = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    background: 'linear-gradient(135deg, #2e2e2e, #1a1a1a)',
-    color: '#ffffff',
+    background: `linear-gradient(135deg, ${theme.color.primaryBackgroundStart}, ${theme.color.primaryBackgroundEnd})`,
+    color: theme.color.primaryText,
     fontFamily: "'Arial', sans-serif",
   }),
   heading: css({
-    color: '#00ffcc',
+    color: theme.color.accentColor,
     textShadow: `
-        0 0 20px rgba(0, 255, 204, 0.8),
-        0 0 30px rgba(0, 255, 204, 0.6),
-        0 0 40px rgba(0, 255, 204, 0.4)
+      0 0 20px ${theme.color.accentShadowLight},
+      0 0 30px ${theme.color.accentShadowMedium},
+      0 0 40px ${theme.color.accentShadowDark}
     `,
-    fontSize: '4.5em',
+    fontSize: theme.main.font.xxxl,
   }),
   navList: css({
     listStyleType: 'none',
     textAlign: 'center',
   }),
   navLink: css({
-    color: '#ffcc00',
+    color: theme.color.linkColor,
     textDecoration: 'none',
-    fontSize: '2em',
+    fontSize: theme.main.font.lg,
     transition: 'color 0.3s ease, transform 0.3s ease',
+    display: 'block',
+    marginBottom: theme.main.spacing.xs,
     '&:hover': {
-      color: '#ffff00',
+      color: theme.color.linkHoverColor,
       transform: 'scale(1.1)',
     },
   }),
@@ -59,57 +54,41 @@ export const s = {
 
 // @todo refactoring .theme - END
 
-// @todo refactoring .local (li + link)
+////////////////////////////////////////////////////////////////////////////////////
+//MAIN
+////////////////////////////////////////////////////////////////////////////////////
 
 export const App = () => {
   return (
     <div css={s.mainBody}>
-      <Global styles={globalStyles} />
+      <Global styles={theme.globalStyles} />
       <h1 css={s.heading}>Welcome!</h1>
       <nav>
         <ul css={s.navList}>
-          <li>
-            <Link to='/' css={s.navLink}>
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to='/rock-paper-scissors' css={s.navLink}>
-              Rock Paper Scissors
-            </Link>
-          </li>
-          <li>
-            <Link to='/seal-breaker' css={s.navLink}>
-              Seal Breaker
-            </Link>
-          </li>
-          <li>
-            <Link to='/tic-tac-toe' css={s.navLink}>
-              Tic Tac Toe
-            </Link>
-          </li>
-          <li>
-            <Link to='/todoapp' css={s.navLink}>
-              ToDoApp
-            </Link>
-          </li>
-          <li>
-            <Link to='/snake' css={s.navLink}>
-              Snake
-            </Link>
-          </li>
-          <li>
-            <Link to='/checkers' css={s.navLink}>
-              Checkers
-            </Link>
-          </li>
+          <AppLink to='/home' title='Home' />
+          <AppLink to='/rock-paper-scissors' title='Rock Paper Scissors' />
+          <AppLink to='/seal-breaker' title='Seal Breaker' />
+          <AppLink to='/tic-tac-toe' title='Tic Tac Toe' />
+          <AppLink to='/todoapp' title='ToDoApp' />
+          <AppLink to='/snake' title='Snake' />
+          <AppLink to='/checkers' title='Checkers' />
         </ul>
       </nav>
     </div>
   )
 }
 
-// @todo refactoring .local (li + link) - END
-
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(<RoutesList />)
+
+////////////////////////////////////////////////////////////////////////////////////
+//LOCAL COMPONENTS
+////////////////////////////////////////////////////////////////////////////////////
+
+const AppLink = ({ to, title }) => (
+  <li>
+    <Link to={to} css={s.navLink}>
+      {title}
+    </Link>
+  </li>
+)
