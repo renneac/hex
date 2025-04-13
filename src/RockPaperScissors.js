@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import * as theme from './theme'
 import { css, Global } from '@emotion/react'
 import ReactDOM from 'react-dom/client'
 
@@ -14,54 +15,67 @@ import scissors from './images/scissors.png'
 
 // @todo refactoring .theme
 
-const globalStyles = css`
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: content-box;
-  }
-  body {
-    background-color: #e3f2fd;
-  }
-  p {
-    color: rgb(30, 229, 129);
-  }
-  button {
-    background-color: #1976d2;
-    color: #ffffff;
-    border: none;
-    font-size: 50px;
-    margin: 10px;
-    padding: 15px;
-    border-radius: 10px;
-  }
-  button:hover {
-    background-color: #0d47a1;
-  }
-`
 export const s = {
-  img: css({
-    width: '100px',
-    height: '100px',
-  }),
   buttonContainer: css({
     height: '100vh',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    fontSize: '50px',
+    background: `linear-gradient(135deg, ${theme.color.primaryBackgroundStart}, ${theme.color.primaryBackgroundEnd})`,
+    color: theme.color.primaryText,
+    fontFamily: "'Arial', sans-serif",
+  }),
+  button: css({
+    backgroundColor: theme.color.accentColor,
+    color: theme.color.primaryBackgroundStart,
+    border: 'none',
+    fontSize: theme.main.font.xl,
+    margin: theme.main.spacing.sm,
+    padding: `${theme.main.spacing.sm} ${theme.main.spacing.md}`,
+    borderRadius: '10px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease, transform 0.3s ease',
+    '&:hover': {
+      backgroundColor: theme.color.accentShadowLight,
+      transform: 'scale(1.05)',
+    },
+  }),
+  img: css({
+    width: '100px',
+    height: '100px',
+    margin: theme.main.spacing.xs,
   }),
   imageP: css({
-    width: '500px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: theme.main.spacing.md,
   }),
   scoreContainer: css({
-    width: '500px',
+    width: '300px',
     display: 'flex',
     justifyContent: 'space-between',
+    marginTop: theme.main.spacing.md,
+    fontSize: theme.main.font.lg,
+    color: theme.color.primaryText,
+  }),
+
+  resultText: css({
+    marginTop: theme.main.spacing.md,
+    fontSize: theme.main.font.lg,
+    color: theme.color.linkColor,
+  }),
+  roundCounter: css({
+    marginTop: theme.main.spacing.sm,
+    fontSize: theme.main.font.md,
+    color: theme.color.primaryText,
+  }),
+  winnerMessage: css({
+    marginTop: theme.main.spacing.md,
+    fontSize: theme.main.font.xl,
+    color: theme.color.accentColor,
+    fontWeight: 'bold',
   }),
   left: css({
     textAlign: 'left',
@@ -115,14 +129,20 @@ export const RockPaperScissors = () => {
 
   return (
     <div css={s.buttonContainer}>
-      <Global styles={globalStyles} />
-      <button onClick={() => ProceedTurn(0)}>Kameň</button>
-      <button onClick={() => ProceedTurn(1)}>Nožnice</button>
-      <button onClick={() => ProceedTurn(2)}>Papier</button>
+      <Global styles={theme.globalStyles} />
+      <button css={s.button} onClick={() => ProceedTurn(0)}>
+        Kameň
+      </button>
+      <button css={s.button} onClick={() => ProceedTurn(1)}>
+        Nožnice
+      </button>
+      <button css={s.button} onClick={() => ProceedTurn(2)}>
+        Papier
+      </button>
 
-      <p>Aktualne kolo: {turns}</p>
+      <p css={s.roundCounter}>Aktualne kolo: {turns}</p>
 
-      <p>
+      <div>
         {playerWins !== 3 && computerWins !== 3 ? (
           <div css={s.scoreContainer}>
             <span css={s.left}>Hráč</span>{' '}
@@ -132,18 +152,18 @@ export const RockPaperScissors = () => {
             <span css={s.right}>Počítač</span>
           </div>
         ) : playerWins !== 3 ? (
-          `Vyhral počítač.`
+          <p css={s.winnerMessage}>Vyhral počítač.</p>
         ) : (
-          `Vyhral si.`
+          <p css={s.winnerMessage}>Vyhral si.</p>
         )}
-      </p>
+      </div>
 
       <p css={s.imageP}>
         <img css={s.img} src={optionsImages[userChoice]} /> <span> : </span>
         <img css={s.img} src={optionsImages[opponentChoice]} />
       </p>
 
-      <p>{result}</p>
+      <p css={s.resultText}>{result}</p>
     </div>
   )
 }
