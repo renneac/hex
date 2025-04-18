@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import * as theme from './theme'
 import { css, Global } from '@emotion/react'
 import ReactDOM from 'react-dom/client'
 
@@ -11,40 +12,24 @@ import { CreateGrid } from './Reusable'
 //////////////////////////////////////////////////////////////////////////////
 
 // @todo refactoring .theme
-
-const globalStyles = css`
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: content-box;
-  }
-  body {
-    background-color: #000000;
-  }
-  button: hover {
-    background-color: #663399;
-  }
-`
-
 export const s = {
-  buttonContainer: css({
+  container: css({
     height: '100vh',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-  }),
-  button: css({
-    height: '150px',
-    width: '150px',
-    margin: '10px',
-    backgroundColor: '#FF6B00',
-    border: '4px solid #006600',
-    transition: 'background-color 0.3s, color 0.3s',
+    background: `linear-gradient(135deg, ${theme.color.primaryBackgroundStart}, ${theme.color.primaryBackgroundEnd})`,
   }),
   headerTurn: css({
-    color: '#ff0000',
+    color: theme.color.accentColor,
+    marginBottom: theme.main.spacing.md,
     fontFamily: "'Arial Black', Gadget, sans-serif",
+    textShadow: `
+    0 0 20px ${theme.color.accentShadowLight},
+    0 0 30px ${theme.color.accentShadowMedium},
+    0 0 40px ${theme.color.accentShadowDark}
+  `,
   }),
 }
 
@@ -185,10 +170,10 @@ export const SealBreaker = () => {
   }
 
   return (
-    <div>
+    <div css={s.container}>
       <h1 css={s.headerTurn}>Number of turns: {turns}</h1>
       <table>
-        <Global styles={globalStyles} />
+        <Global styles={theme.globalStyles} />
         <tbody>
           {grid.map((row, index) => (
             <tr key={index}>

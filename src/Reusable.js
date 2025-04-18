@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import * as theme from './theme'
 
 ////////////////////////////////////////////////////////////////////////////////////
 // CSS
@@ -9,9 +10,15 @@ export const s = {
     height: '150px',
     width: '150px',
     margin: '10px',
-    backgroundColor: '#006B00',
-    border: '4px solid #006600',
+    fontSize: theme.main.font.xl,
+    backgroundColor: theme.color.accentColor,
+    border: `4px solid ${theme.color.linkColor}`,
     transition: 'background-color 0.3s, color 0.3s',
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: theme.color.linkHoverColor,
+      color: theme.color.primaryBackgroundStart,
+    },
   }),
 }
 
