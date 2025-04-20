@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import * as theme from './theme'
 import { css, Global } from '@emotion/react'
 import ReactDOM from 'react-dom/client'
 
@@ -15,20 +16,6 @@ import { CreateGrid } from './Reusable'
 
 // @todo refactoring .theme
 
-const globalStyles = css`
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: content-box;
-  }
-  body {
-    background-color: #000000;
-  }
-  button: hover {
-    background-color: #663399;
-  }
-`
-
 export const s = {
   buttonContainer: css({
     height: '100vh',
@@ -36,18 +23,17 @@ export const s = {
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-  }),
-  button: css({
-    height: '150px',
-    width: '150px',
-    margin: '10px',
-    backgroundColor: '#006B00',
-    border: '4px solid #006600',
-    transition: 'background-color 0.3s, color 0.3s',
+    background: `linear-gradient(135deg, ${theme.color.primaryBackgroundStart}, ${theme.color.primaryBackgroundEnd})`,
   }),
   headerTurn: css({
-    color: '#ff0000',
+    color: theme.color.accentColor,
     fontFamily: "'Arial Black', Gadget, sans-serif",
+    textShadow: `
+    0 0 20px ${theme.color.accentShadowLight},
+    0 0 30px ${theme.color.accentShadowMedium},
+    0 0 40px ${theme.color.accentShadowDark}
+  `,
+    fontSize: theme.main.font.xl,
   }),
 }
 
@@ -73,13 +59,13 @@ export const TicTacToe = () => {
 
   //4 tahy
   const [isFirstPlayerTurn, setIsFirstPlayerTurn] = useState(true)
-  const [currentGrid, setCurrentGrid] = useState(['-'])
+  const [currentGrid, setCurrentGrid] = useState([''])
   const [endGame, setEndGame] = useState(false)
   const [winner, setWinner] = useState(null)
 
   const ProceedTurn = index => {
     if (!endGame) {
-      if (document.getElementById(index).innerHTML === '-') {
+      if (document.getElementById(index).innerHTML === '') {
         document.getElementById(index).innerHTML = isFirstPlayerTurn
           ? `<img src="${player1}" alt="Hráč 1">`
           : `<img src="${player2}" alt="Hráč 2">`
@@ -111,12 +97,12 @@ export const TicTacToe = () => {
     for (let i = 0; i < winLines.length; i++) {
       const [a, b, c] = winLines[i]
       if (grid[a] && grid[a] === grid[b] && grid[a] === grid[c]) {
-        grid[a] !== '-' ? (setWinner(isFirstPlayerTurn ? player2 : player1), setEndGame(true)) : ''
+        grid[a] !== '' ? (setWinner(isFirstPlayerTurn ? player2 : player1), setEndGame(true)) : '-'
         return grid[a]
       }
     }
 
-    if (!grid.includes('-')) {
+    if (!grid.includes('')) {
       setEndGame(true)
     }
   }
@@ -130,7 +116,7 @@ export const TicTacToe = () => {
       <h1 css={s.headerTurn}>{endGame ? (winner ? 'WINNER' : 'DRAW') : 'TURN'}</h1>
       <img src={endGame ? winner : isFirstPlayerTurn ? player1 : player2} alt='' />
       <table>
-        <Global styles={globalStyles} />
+        <Global styles={theme.globalStyles} />
         <tbody>
           {grid.map((row, index) => (
             <tr key={index}>
