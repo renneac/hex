@@ -11,20 +11,22 @@ import { CreateGrid } from './Reusable'
 //// CSS
 //////////////////////////////////////////////////////////////////////////////
 
-// @todo refactoring .theme
 export const s = {
   container: css({
+    // @todo .theme
     height: '100vh',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
+    // @todo .theme
     background: `linear-gradient(135deg, ${theme.color.primaryBackgroundStart}, ${theme.color.primaryBackgroundEnd})`,
   }),
   headerTurn: css({
     color: theme.color.accentColor,
     marginBottom: theme.main.spacing.md,
     fontFamily: "'Arial Black', Gadget, sans-serif",
+    // @todo .theme
     textShadow: `
     0 0 20px ${theme.color.accentShadowLight},
     0 0 30px ${theme.color.accentShadowMedium},
@@ -32,8 +34,6 @@ export const s = {
   `,
   }),
 }
-
-// @todo refactoring .theme - END
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -48,85 +48,14 @@ export const SealBreaker = () => {
   const [endGame, setEndGame] = useState(false)
   const [turns, setTurns] = useState(0)
 
-  //////////////////////////////////////////////////////////////////////////////
-  //// Stare ProceedTurn zaciatok - vymazat?
-  //////////////////////////////////////////////////////////////////////////////
-  // const ProceedTurn = index => {
-  //   if (!endGame) {
-  //     setTurns(turns + 1)
-
-  //     ////////////////////////////////////////////////////////////
-  //     //@todo refactoring Fn - SwitchTarget.. to much ifs
-  //     ////////////////////////////////////////////////////////////
-
-  //     SwitchTarget(index, 0)
-
-  //     // stred vrchnej casti
-  //     if (index > 1 && index < columns) {
-  //       SwitchTarget(index, -1)
-  //       SwitchTarget(index, 1)
-  //       SwitchTarget(index, columns)
-  //     } else if (index < rows * columns && index > rows * columns - columns + 1) {
-  //       // stred spodnej casti
-  //       SwitchTarget(index, 1)
-  //       SwitchTarget(index, -1)
-  //       SwitchTarget(index, -columns)
-  //     }
-
-  //     // prava strana
-  //     else if (Number(index) % columns === 0) {
-  //       SwitchTarget(index, -1)
-  //       if (Number(index) === columns * rows) {
-  //         // pravy dolny roh
-  //         SwitchTarget(index, -columns)
-  //       } else if (Number(index) === columns) {
-  //         // pravy horny roh
-  //         SwitchTarget(index, columns)
-  //       } else {
-  //         SwitchTarget(index, columns)
-  //         SwitchTarget(index, -columns)
-  //       }
-  //     }
-  //     ////////////////// lava strana//////////////////
-  //     else if (Number(index) % columns === 1) {
-  //       SwitchTarget(index, 1)
-  //       if (Number(index) === (rows - 1) * columns + 1) {
-  //         // lavy dolny roh
-  //         SwitchTarget(index, -columns)
-  //       } else if (Number(index) === 1) {
-  //         // lavy horny roh
-  //         SwitchTarget(index, columns)
-  //       } else {
-  //         // lava strana stred
-  //         SwitchTarget(index, columns)
-  //         SwitchTarget(index, -columns)
-  //       }
-  //     } else {
-  //       //stred stred
-  //       SwitchTarget(index, columns)
-  //       SwitchTarget(index, -columns)
-  //       SwitchTarget(index, 1)
-  //       SwitchTarget(index, -1)
-  //     }
-
-  //     ////////////////////////////////////////////////////////////
-  //     //@todo refactoring Fn - SwitchTarget.. to much ifs - END
-  //     ////////////////////////////////////////////////////////////
-
-  //     let newGridState = []
-  //     for (let x = 0; x < 9; x++) {
-  //       newGridState.push(document.getElementById(x + 1).innerHTML)
-  //       setCurrentGrid(newGridState)
-  //     }
-  //   }
-  // }
-  //////////////////////////////////////////////////////////////////////////////
-  //// Stare ProceedTurn Koniec - vymazat?
-  //////////////////////////////////////////////////////////////////////////////
-
   const ProceedTurn = index => {
     if (!endGame) {
       setTurns(turns + 1)
+
+      // @comment - gratulka našel jsi vlastní řešení problému, které je zjednodušením předchozího :P
+      // takto to klidně nech je to správně, relativně jednoduché, ale složitější na definici (tedy tato metoda nebude fungovat pokud se změní rozměr gridu)
+      // pokud by jsi to chtěl ještě trošku vylevlit i pro dynamický rozměr gridky tak postup je jednoduchý:
+      // vždy se ptáš pouze na sousední 4 pole a pokud existují tak je přepínáš true / false
 
       // Definícia susedov pre každú pozíciu (index 1-9)
       const neighbors = {

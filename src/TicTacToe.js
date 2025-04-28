@@ -14,20 +14,21 @@ import { CreateGrid } from './Reusable'
 //// CSS
 //////////////////////////////////////////////////////////////////////////////
 
-// @todo refactoring .theme
-
 export const s = {
   buttonContainer: css({
+    // @todo .theme
     height: '100vh',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
+    // @todo .theme
     background: `linear-gradient(135deg, ${theme.color.primaryBackgroundStart}, ${theme.color.primaryBackgroundEnd})`,
   }),
   headerTurn: css({
     color: theme.color.accentColor,
     fontFamily: "'Arial Black', Gadget, sans-serif",
+    // @todo .theme
     textShadow: `
     0 0 20px ${theme.color.accentShadowLight},
     0 0 30px ${theme.color.accentShadowMedium},
@@ -36,8 +37,6 @@ export const s = {
     fontSize: theme.main.font.xl,
   }),
 }
-
-// @todo refactoring .theme - END
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////

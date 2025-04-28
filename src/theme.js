@@ -25,6 +25,7 @@ export const responsiveSize = {
     md: 2, //rem
     lg: 4, //rem
     xl: 6, //rem
+    xxl: 8, //rem
   },
 }
 
@@ -45,6 +46,7 @@ export const main = {
     md: `${responsiveSize.spacing.md}rem`,
     lg: `${responsiveSize.spacing.lg}rem`,
     xl: `${responsiveSize.spacing.xl}rem`,
+    xxl: `${responsiveSize.spacing.xxl}rem`,
   },
 }
 
@@ -63,4 +65,8 @@ export const color = {
   // Farba pre odkazy
   linkColor: '#ffcc00',
   linkHoverColor: '#ffff00',
+}
+
+export const background = {
+  primaryBackground: `linear-gradient(135deg, ${color.primaryBackgroundStart}, ${color.primaryBackgroundEnd})`,
 }

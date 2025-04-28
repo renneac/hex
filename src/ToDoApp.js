@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import * as theme from './theme'
 import { css, Global } from '@emotion/react'
 import ReactDOM from 'react-dom/client'
 
@@ -7,82 +8,108 @@ import { useEffect, useMemo, useState } from 'react'
 ////////////////////////////////////////////////////////
 //css
 ////////////////////////////////////////////////////////
-const globalStyles = css`
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: content-box;
-    background-color: #fce7c8;
-  }
-`
 
 export const s = {
   body: css({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    color: '#B1C29E',
+    minHeight: '100vh',
+    background: `linear-gradient(135deg, ${theme.color.primaryBackgroundStart}, ${theme.color.primaryBackgroundEnd})`,
   }),
   mainHeader: css({
-    fontSize: '70px',
-    margin: '10px',
-    color: '#F0A04B',
+    fontSize: theme.main.font.xxxl,
+    margin: theme.main.spacing.sm,
+    color: theme.color.accentColor,
   }),
   inputFind: css({
-    padding: '10px 100px',
+    padding: `${theme.main.spacing.xs} ${theme.main.spacing.xxl}`,
     textAlign: 'center',
-    margin: '15px',
-    fontSize: '20px',
-    border: '2px solid  #B1C29E',
+    margin: theme.main.spacing.xs,
+    fontSize: theme.main.font.md,
+    background: `linear-gradient(135deg, ${theme.color.primaryBackgroundStart}, ${theme.color.primaryBackgroundEnd})`,
+    border: `2px solid ${theme.color.primaryText}`,
     '::placeholder': {
-      color: '#B1C29E',
+      color: theme.color.primaryText,
     },
     ':focus': {
-      borderColor: '#F0A04B',
+      borderColor: theme.color.accentColor,
       outline: 'none',
-      color: '#F0A04B',
+      color: theme.color.accentColor,
     },
   }),
   inputTask: css({
-    padding: '30px 100px',
+    padding: `${theme.main.spacing.md} ${theme.main.spacing.xxl}`,
     textAlign: 'center',
-    margin: '0px 15px',
-    fontSize: '20px',
-    border: '2px solid  #B1C29E',
+    margin: `0 ${theme.main.spacing.xs}`,
+    fontSize: theme.main.font.md,
+    background: `linear-gradient(135deg, ${theme.color.primaryBackgroundStart}, ${theme.color.primaryBackgroundEnd})`,
+    border: `2px solid ${theme.color.primaryText}`,
     '::placeholder': {
-      color: '#B1C29E',
+      color: theme.color.primaryText,
     },
     ':focus': {
-      borderColor: '#F0A04B',
+      borderColor: theme.color.accentColor,
       outline: 'none',
-      color: '#F0A04B',
+      color: theme.color.accentColor,
     },
   }),
   taskLayout: css({
     width: '243px',
-    border: '2px solid black',
-    padding: '30px 100px',
+    border: `2px solid ${theme.color.primaryText}`,
+    padding: `${theme.main.spacing.md} ${theme.main.spacing.xl}`,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    gap: '10px',
-    fontSize: '20px',
-    margin: '10px',
-    border: '2px solid  #B1C29E',
+    gap: theme.main.spacing.xs,
+    fontSize: theme.main.font.md,
+    margin: theme.main.spacing.xs,
+    color: theme.color.primaryText,
   }),
   deleteAllButton: css({
-    padding: '15px',
-    margin: '20px 20px 10px 20px',
-    backgroundColor: '#FADA7A',
-    color: '#F0A04B',
-    border: '2px solid #B1C29E',
+    padding: theme.main.spacing.sm,
+    margin: `${theme.main.spacing.md} ${theme.main.spacing.md} ${theme.main.spacing.xs} ${theme.main.spacing.md}`,
+    backgroundColor: theme.color.linkColor,
+    color: theme.color.primaryBackgroundStart,
+    border: `2px solid ${theme.color.primaryText}`,
     borderRadius: '10px',
     fontWeight: 'bold',
     cursor: 'pointer',
     transition: '0.3s',
     '&:hover': {
-      backgroundColor: '#F0A04B',
-      color: 'white',
+      backgroundColor: theme.color.linkHoverColor,
+      color: theme.color.primaryBackgroundStart,
+    },
+  }),
+  editForm: css({
+    marginTop: theme.main.spacing.md,
+    padding: theme.main.spacing.md,
+    border: `1px solid ${theme.color.accentColor}`,
+    borderRadius: '5px',
+    backgroundColor: 'rgba(30, 30, 30, 0.8)',
+  }),
+  editFormInner: css({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: theme.main.spacing.xs,
+  }),
+  editHeading: css({
+    fontSize: theme.main.font.lg,
+    color: theme.color.accentColor,
+    marginBottom: theme.main.spacing.xs,
+  }),
+  editTextarea: css({
+    width: '100%',
+    padding: theme.main.spacing.xs,
+    fontSize: theme.main.font.md,
+    border: `1px solid ${theme.color.accentColor}`,
+    borderRadius: '3px',
+    backgroundColor: '#444',
+    color: theme.color.primaryText,
+    '&:focus': {
+      borderColor: theme.color.accentColor,
+      outline: 'none',
+      backgroundColor: '#555',
     },
   }),
 }
@@ -207,7 +234,7 @@ export const ToDoApp = () => {
 
   return (
     <div css={s.body}>
-      <Global styles={globalStyles} />
+      <Global styles={theme.globalStyles} />
       <h1 css={s.mainHeader}>ToDoApp</h1>
       <div>
         <input
@@ -242,9 +269,10 @@ export const ToDoApp = () => {
             e.preventDefault()
             setUpdateValue('')
           }}
+          css={s.editForm}
         >
-          <div>
-            <h3>Uprava ulohy</h3>
+          <div css={s.editFormInner}>
+            <h3 css={s.editHeading}>Uprava ulohy</h3>
             <textarea
               rows='5'
               autoFocus
@@ -252,6 +280,7 @@ export const ToDoApp = () => {
               id={currentListId}
               onChange={e => setUpdateValue(e.target.value)}
               onKeyDown={CheckUpdate}
+              css={s.editTextarea}
             />
           </div>
         </form>

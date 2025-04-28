@@ -13,15 +13,15 @@ import scissors from './images/scissors.png'
 //css
 ////////////////////////////////////////////////////////
 
-// @todo refactoring .theme
-
 export const s = {
   buttonContainer: css({
+    // @todo - refactoring "globální hodnota" viz. index.js
     height: '100vh',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    // @todo - opět již opakující se stejná hodnota tedy .theme (formát bude tedy např.: myBg: `linear-gradient(135deg, ${theme.color.primaryBackgroundStart}, ${theme.color.primaryBackgroundEnd})`)
     background: `linear-gradient(135deg, ${theme.color.primaryBackgroundStart}, ${theme.color.primaryBackgroundEnd})`,
     color: theme.color.primaryText,
     fontFamily: "'Arial', sans-serif",
@@ -33,11 +33,14 @@ export const s = {
     fontSize: theme.main.font.xl,
     margin: theme.main.spacing.sm,
     padding: `${theme.main.spacing.sm} ${theme.main.spacing.md}`,
+    // @todo opět ideální hodnota pro .theme
     borderRadius: '10px',
     cursor: 'pointer',
+    // @todo opět pravděpodobně .theme
     transition: 'background-color 0.3s ease, transform 0.3s ease',
     '&:hover': {
       backgroundColor: theme.color.accentShadowLight,
+      // @todo opět viz. index.js
       transform: 'scale(1.05)',
     },
   }),
@@ -90,8 +93,6 @@ export const s = {
   }),
 }
 
-// @todo refactoring .theme - END
-
 ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
 
@@ -130,6 +131,8 @@ export const RockPaperScissors = () => {
   return (
     <div css={s.buttonContainer}>
       <Global styles={theme.globalStyles} />
+
+      {/* @todo butony se liší pouze v hodně pro ProceedTurn a title, tedy ideálně refactoring na lokální komponentu */}
       <button css={s.button} onClick={() => ProceedTurn(0)}>
         Kameň
       </button>
