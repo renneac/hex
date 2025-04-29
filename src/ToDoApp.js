@@ -15,7 +15,7 @@ export const s = {
     flexDirection: 'column',
     alignItems: 'center',
     minHeight: '100vh',
-    background: `linear-gradient(135deg, ${theme.color.primaryBackgroundStart}, ${theme.color.primaryBackgroundEnd})`,
+    background: theme.background.primaryBackground,
   }),
   mainHeader: css({
     fontSize: theme.main.font.xxxl,
@@ -97,9 +97,9 @@ export const s = {
     fontSize: theme.main.font.lg,
     color: theme.color.accentColor,
     marginBottom: theme.main.spacing.xs,
+    textAlign: 'center',
   }),
   editTextarea: css({
-    width: '100%',
     padding: theme.main.spacing.xs,
     fontSize: theme.main.font.md,
     border: `1px solid ${theme.color.accentColor}`,
@@ -110,6 +110,29 @@ export const s = {
       borderColor: theme.color.accentColor,
       outline: 'none',
       backgroundColor: '#555',
+    },
+  }),
+  buttonContainer: css({
+    display: 'flex',
+    gap: theme.main.spacing.xs,
+    '& button': {
+      padding: `${theme.main.spacing.xs} ${theme.main.spacing.sm}`,
+      fontSize: theme.main.font.sm,
+      letterSpacing: '2px',
+      backgroundColor: theme.color.primaryBackgroundEnd,
+      color: theme.color.primaryText,
+      border: `1px solid ${theme.color.accentColor}`,
+      borderRadius: '5px',
+      cursor: 'pointer',
+      transition: '0.3s',
+      '&:hover': {
+        backgroundColor: theme.color.accentShadowDark,
+        color: theme.color.primaryText,
+        borderColor: theme.color.accentShadowLight,
+      },
+      '&:active': {
+        backgroundColor: theme.color.accentShadowMedium,
+      },
     },
   }),
 }
@@ -296,7 +319,7 @@ export const ToDoApp = () => {
             <div>
               <p>{task.value}</p>
             </div>
-            <div>
+            <div css={s.buttonContainer}>
               <button value={task.id} onClick={CompleteTask}>
                 {'Splnene'}:{task.completed === true ? 'ano' : 'nie'}
               </button>

@@ -19,8 +19,7 @@ export const s = {
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    // @todo .theme
-    background: `linear-gradient(135deg, ${theme.color.primaryBackgroundStart}, ${theme.color.primaryBackgroundEnd})`,
+    background: theme.background.primaryBackground,
   }),
   headerTurn: css({
     color: theme.color.accentColor,

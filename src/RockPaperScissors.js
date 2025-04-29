@@ -21,8 +21,7 @@ export const s = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    // @todo - opět již opakující se stejná hodnota tedy .theme (formát bude tedy např.: myBg: `linear-gradient(135deg, ${theme.color.primaryBackgroundStart}, ${theme.color.primaryBackgroundEnd})`)
-    background: `linear-gradient(135deg, ${theme.color.primaryBackgroundStart}, ${theme.color.primaryBackgroundEnd})`,
+    background: theme.background.primaryBackground,
     color: theme.color.primaryText,
     fontFamily: "'Arial', sans-serif",
   }),
