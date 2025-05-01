@@ -13,8 +13,7 @@ import { CreateGrid } from './Reusable'
 
 export const s = {
   container: css({
-    // @todo .theme
-    height: '100vh',
+    height: theme.layout.fullScreenHeight,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -25,12 +24,7 @@ export const s = {
     color: theme.color.accentColor,
     marginBottom: theme.main.spacing.md,
     fontFamily: "'Arial Black', Gadget, sans-serif",
-    // @todo .theme
-    textShadow: `
-    0 0 20px ${theme.color.accentShadowLight},
-    0 0 30px ${theme.color.accentShadowMedium},
-    0 0 40px ${theme.color.accentShadowDark}
-  `,
+    textShadow: theme.effects.textShadow,
   }),
 }
 

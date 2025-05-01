@@ -15,8 +15,7 @@ import scissors from './images/scissors.png'
 
 export const s = {
   buttonContainer: css({
-    // @todo - refactoring "globální hodnota" viz. index.js
-    height: '100vh',
+    height: theme.layout.fullScreenHeight,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

@@ -70,3 +70,20 @@ export const color = {
 export const background = {
   primaryBackground: `linear-gradient(135deg, ${color.primaryBackgroundStart}, ${color.primaryBackgroundEnd})`,
 }
+
+export const layout = {
+  fullScreenHeight: '100vh',
+}
+
+export const effects = {
+  textShadow: `
+      0 0 20px ${color.accentShadowLight},
+      0 0 30px ${color.accentShadowMedium},
+      0 0 40px ${color.accentShadowDark}
+    `,
+  scale: {
+    sm: 'scale(1.05)',
+    md: 'scale(1.1)',
+    lg: 'scale(1.15)',
+  },
+}

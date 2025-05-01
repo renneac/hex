@@ -14,7 +14,7 @@ export const s = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    minHeight: '100vh',
+    minHeight: theme.layout.fullScreenHeight,
     background: theme.background.primaryBackground,
   }),
   mainHeader: css({

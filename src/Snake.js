@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import * as theme from './theme'
 import { css, Global } from '@emotion/react'
 import ReactDOM from 'react-dom/client'
 
@@ -32,7 +33,7 @@ const globalStyles = css`
 
 export const s = {
   snakeContainer: {
-    height: '100vh',
+    height: theme.layout.fullScreenHeight,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
