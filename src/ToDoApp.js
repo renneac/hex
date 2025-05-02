@@ -72,10 +72,10 @@ export const s = {
     backgroundColor: theme.color.linkColor,
     color: theme.color.primaryBackgroundStart,
     border: `2px solid ${theme.color.primaryText}`,
-    borderRadius: '10px',
+    borderRadius: theme.borderRadius.md,
     fontWeight: 'bold',
     cursor: 'pointer',
-    transition: '0.3s',
+    transition: theme.effects.transition.default,
     '&:hover': {
       backgroundColor: theme.color.linkHoverColor,
       color: theme.color.primaryBackgroundStart,
@@ -85,7 +85,7 @@ export const s = {
     marginTop: theme.main.spacing.md,
     padding: theme.main.spacing.md,
     border: `1px solid ${theme.color.accentColor}`,
-    borderRadius: '5px',
+    borderRadius: theme.borderRadius.sm,
     backgroundColor: 'rgba(30, 30, 30, 0.8)',
   }),
   editFormInner: css({
@@ -103,7 +103,7 @@ export const s = {
     padding: theme.main.spacing.xs,
     fontSize: theme.main.font.md,
     border: `1px solid ${theme.color.accentColor}`,
-    borderRadius: '3px',
+    borderRadius: theme.borderRadius.xs,
     backgroundColor: '#444',
     color: theme.color.primaryText,
     '&:focus': {
@@ -122,9 +122,9 @@ export const s = {
       backgroundColor: theme.color.primaryBackgroundEnd,
       color: theme.color.primaryText,
       border: `1px solid ${theme.color.accentColor}`,
-      borderRadius: '5px',
+      borderRadius: theme.borderRadius.sm,
       cursor: 'pointer',
-      transition: '0.3s',
+      transition: theme.effects.transition.default,
       '&:hover': {
         backgroundColor: theme.color.accentShadowDark,
         color: theme.color.primaryText,

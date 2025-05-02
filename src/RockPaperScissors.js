@@ -31,15 +31,12 @@ export const s = {
     fontSize: theme.main.font.xl,
     margin: theme.main.spacing.sm,
     padding: `${theme.main.spacing.sm} ${theme.main.spacing.md}`,
-    // @todo opět ideální hodnota pro .theme
-    borderRadius: '10px',
+    borderRadius: theme.borderRadius.md,
     cursor: 'pointer',
-    // @todo opět pravděpodobně .theme
-    transition: 'background-color 0.3s ease, transform 0.3s ease',
+    transition: theme.effects.transition.backgroundTransform,
     '&:hover': {
       backgroundColor: theme.color.accentShadowLight,
-      // @todo opět viz. index.js
-      transform: 'scale(1.05)',
+      trensform: theme.effects.scale.sm,
     },
   }),
   img: css({

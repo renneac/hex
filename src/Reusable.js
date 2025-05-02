@@ -13,7 +13,7 @@ export const s = {
     fontSize: theme.main.font.xl,
     backgroundColor: theme.color.accentColor,
     border: `4px solid ${theme.color.linkColor}`,
-    transition: 'background-color 0.3s, color 0.3s',
+    transition: theme.effects.transition.backgroundAndColor,
     cursor: 'pointer',
     '&:hover': {
       backgroundColor: theme.color.linkHoverColor,

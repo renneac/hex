@@ -55,7 +55,7 @@ export const s = {
     height: '30px',
     margin: '8px',
     cursor: 'pointer',
-    borderRadius: '5px',
+    borderRadius: theme.borderRadius.sm,
     border: '2px, solid #333',
     ':hover': {
       backgroundColor: '#e0e0e0',
@@ -66,7 +66,7 @@ export const s = {
     height: '40px',
     margin: '8px',
     cursor: 'pointer',
-    borderRadius: '5px',
+    borderRadius: theme.borderRadius.sm,
     ':hover': {
       backgroundColor: '#e0e0e0',
     },

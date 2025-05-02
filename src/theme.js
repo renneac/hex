@@ -86,4 +86,17 @@ export const effects = {
     md: 'scale(1.1)',
     lg: 'scale(1.15)',
   },
+  transition: {
+    colorTransform: 'color 0.3s ease, transform 0.3s ease',
+    backgroundTransform: 'background-color 0.3s ease, transform 0.3s ease',
+    backgroundAndColor: 'background-color 0.3s, color 0.3s',
+    default: '0.3s',
+  },
+}
+
+export const borderRadius = {
+  xs: '3px',
+  sm: '5px',
+  md: '10px',
+  lg: '20px',
 }

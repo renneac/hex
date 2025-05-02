@@ -36,8 +36,7 @@ export const s = {
     color: theme.color.linkColor,
     textDecoration: 'none',
     fontSize: theme.main.font.lg,
-    // @todo refactoring (optional) - opět forma animace, u linku je pravděpodobné stejné chování v celé app tedy opět lze .theme
-    transition: 'color 0.3s ease, transform 0.3s ease',
+    transition: theme.effects.transition.colorTransform,
     display: 'block',
     marginBottom: theme.main.spacing.xs,
     '&:hover': {
