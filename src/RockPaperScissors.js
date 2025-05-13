@@ -127,16 +127,9 @@ export const RockPaperScissors = () => {
     <div css={s.buttonContainer}>
       <Global styles={theme.globalStyles} />
 
-      {/* @todo butony se liší pouze v hodně pro ProceedTurn a title, tedy ideálně refactoring na lokální komponentu */}
-      <button css={s.button} onClick={() => ProceedTurn(0)}>
-        Kameň
-      </button>
-      <button css={s.button} onClick={() => ProceedTurn(1)}>
-        Nožnice
-      </button>
-      <button css={s.button} onClick={() => ProceedTurn(2)}>
-        Papier
-      </button>
+      <PlayButton name='Kameň' option={0} onClick={ProceedTurn} />
+      <PlayButton name='Nožnice' option={1} onClick={ProceedTurn} />
+      <PlayButton name='Papier' option={2} onClick={ProceedTurn} />
 
       <p css={s.roundCounter}>Aktualne kolo: {turns}</p>
 
@@ -165,3 +158,13 @@ export const RockPaperScissors = () => {
     </div>
   )
 }
+
+////////////////////////////////////////////////////////////////////////////////////
+//LOCAL COMPONENTS
+////////////////////////////////////////////////////////////////////////////////////
+
+const PlayButton = ({ name, option, onClick }) => (
+  <button css={s.button} onClick={() => onClick(option)}>
+    {name}
+  </button>
+)
