@@ -23,23 +23,18 @@ const mq = {
 ////////////////////////////////////////////////////////
 //css
 ////////////////////////////////////////////////////////
-const globalStyles = css`
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: content-box;
-  }
-`
-
 export const s = {
-  snakeContainer: {
+  snakeContainer: css({
     height: theme.layout.fullScreenHeight,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: '20px',
-  },
+    gap: theme.main.spacing.md,
+    background: theme.background.primaryBackground,
+    color: theme.color.primaryText,
+    fontFamily: "'Arial', sans-serif",
+  }),
   cell: css({
     width: '40px',
     height: '40px',
@@ -47,18 +42,24 @@ export const s = {
     backgroundColor: 'transparent',
   }),
   playground: css({
-    border: '2px solid black',
-    margin: '4px',
+    border: `2px solid ${theme.color.accentShadowDark}`,
+    margin: theme.main.spacing.xs,
+    borderRadius: theme.borderRadius.sm,
   }),
   button: css({
     width: '90px',
     height: '30px',
-    margin: '8px',
+    margin: theme.main.spacing.xs,
     cursor: 'pointer',
     borderRadius: theme.borderRadius.sm,
-    border: '2px, solid #333',
-    ':hover': {
-      backgroundColor: '#e0e0e0',
+    border: `2px solid ${theme.color.accentShadowMedium}`,
+    backgroundColor: theme.color.accentColor,
+    color: theme.color.primaryBackgroundStart,
+    fontSize: theme.main.font.md,
+    transition: theme.effects.transition.backgroundTransform,
+    '&:hover': {
+      backgroundColor: theme.color.accentShadowLight,
+      transform: theme.effects.scale.sm,
     },
   }),
   arrowButton: css({
@@ -81,10 +82,11 @@ export const s = {
     alignItems: 'center',
   }),
   header: css({
-    marginBottom: '20px',
-    fontSize: '32px',
+    marginBottom: theme.main.spacing.md,
+    fontSize: theme.main.font.xl,
     fontWeight: 'bold',
-    color: '#333',
+    color: theme.color.accentColor,
+    textShadow: theme.effects.textShadow,
   }),
 }
 
@@ -210,7 +212,7 @@ export const Snake = () => {
     snakeBody.unshift(snakeHead + shift)
 
     if (document.getElementById(snakeHead + shift).style.backgroundColor !== 'orange') {
-      ChangeTileColor(snakeBody[snakeBody.length - 1], 'white')
+      ChangeTileColor(snakeBody[snakeBody.length - 1], 'transparent')
       snakeBody.pop()
     } else {
       CreateFood()
@@ -274,7 +276,7 @@ export const Snake = () => {
 
   return (
     <div css={s.snakeContainer}>
-      <Global styles={globalStyles} />
+      <Global styles={theme.globalStyles} />
       <h1 css={s.header}>Snake</h1>
       <table css={s.playground}>
         <tbody>
