@@ -36,8 +36,8 @@ export const s = {
     fontFamily: "'Arial', sans-serif",
   }),
   cell: css({
-    width: '40px',
-    height: '40px',
+    width: theme.main.spacing.ml,
+    height: theme.main.spacing.ml,
     border: 'none',
     backgroundColor: 'transparent',
   }),
@@ -47,8 +47,8 @@ export const s = {
     borderRadius: theme.borderRadius.sm,
   }),
   button: css({
-    width: '90px',
-    height: '30px',
+    width: theme.main.spacing.xl,
+    height: theme.main.spacing.md,
     margin: theme.main.spacing.xs,
     cursor: 'pointer',
     borderRadius: theme.borderRadius.sm,
@@ -63,20 +63,25 @@ export const s = {
     },
   }),
   arrowButton: css({
-    width: '40px',
-    height: '40px',
-    margin: '8px',
+    width: theme.main.spacing.ml,
+    height: theme.main.spacing.ml,
+    margin: theme.main.spacing.xs,
     cursor: 'pointer',
     borderRadius: theme.borderRadius.sm,
+    transition: theme.effects.transition.backgroundTransform,
+    backgroundColor: theme.color.primaryBackgroundEnd,
+    color: theme.color.accentColor,
     ':hover': {
-      backgroundColor: '#e0e0e0',
+      backgroundColor: theme.color.accentShadowLight,
+      transform: theme.effects.scale.sm,
     },
     ':active': {
-      backgroundColor: '#ccc',
+      backgroundColor: theme.color.accentShadowMedium,
+      transform: theme.effects.scale.md,
     },
   }),
   arrowContainer: css({
-    marginTop: '8px',
+    marginTop: theme.main.spacing.xs,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -96,7 +101,7 @@ export const s = {
 ////////////
 
 export const Snake = () => {
-  const windowWidth = useRef(window.innerWidth)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
   const [init, setInit] = useState(true)
 
@@ -113,6 +118,14 @@ export const Snake = () => {
   const [endGame, setEndGame] = useState(false)
   const [gameWin, setGameWin] = useState(false)
   const [previousMove, setPreviousMove] = useState([])
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  const tabletBreakpoint = 850
 
   let newRow = [],
     newTile,
@@ -293,7 +306,7 @@ export const Snake = () => {
         START
       </button>
 
-      {windowWidth.current < mq.tablet ? (
+      {windowWidth < tabletBreakpoint && (
         <div css={s.arrowContainer}>
           <div>
             <button css={s.arrowButton} onClick={() => CheckSubmit('w')}>
@@ -312,8 +325,6 @@ export const Snake = () => {
             </button>
           </div>
         </div>
-      ) : (
-        ''
       )}
     </div>
   )

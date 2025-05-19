@@ -23,6 +23,7 @@ export const responsiveSize = {
     xs: 0.5, //rem
     sm: 1, //rem
     md: 2, //rem
+    ml: 2.5, // rem
     lg: 4, //rem
     xl: 6, //rem
     xxl: 8, //rem
@@ -44,6 +45,7 @@ export const main = {
     xs: `${responsiveSize.spacing.xs}rem`,
     sm: `${responsiveSize.spacing.sm}rem`,
     md: `${responsiveSize.spacing.md}rem`,
+    ml: `${responsiveSize.spacing.ml}rem`,
     lg: `${responsiveSize.spacing.lg}rem`,
     xl: `${responsiveSize.spacing.xl}rem`,
     xxl: `${responsiveSize.spacing.xxl}rem`,
