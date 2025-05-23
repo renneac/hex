@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import * as theme from './theme'
 import { css, Global } from '@emotion/react'
 import ReactDOM from 'react-dom/client'
 
@@ -11,12 +12,30 @@ import blackPawn from './images/pawnBlack.png'
 //css
 ////////////////////////////////////////////////////////
 export const s = {
+  container: css({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: theme.layout.fullScreenHeight,
+    background: theme.background.primaryBackground,
+    color: theme.color.primaryText,
+  }),
+  heading: css({
+    color: theme.color.accentColor,
+    textShadow: theme.effects.textShadow,
+    fontSize: theme.main.font.xl,
+    marginBottom: theme.main.spacing.md,
+  }),
   blackButton: css({
-    backgroundColor: 'black',
-    color: 'white',
+    background: theme.color.primaryBackgroundStart,
+    color: theme.color.primaryText,
+    borderRadius: theme.borderRadius.sm,
   }),
   whiteButton: css({
-    backgroundColor: 'white',
+    background: theme.color.primaryText,
+    color: theme.color.primaryBackgroundStart,
+    borderRadius: theme.borderRadius.sm,
   }),
   cell: css({
     width: '40px',
@@ -263,8 +282,15 @@ export const Checkers = () => {
   }
 
   return (
-    <div>
-      <h1>Ahoj ♟️</h1>
+    <div css={s.container}>
+      <Global
+        styles={css`
+          body {
+            margin: 0;
+          }
+        `}
+      />
+      <h1 css={s.heading}>CHECKERS ♟️</h1>
       <table>
         <tbody>
           {grid.map((row, index) => (
