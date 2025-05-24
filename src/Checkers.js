@@ -8,6 +8,13 @@ import { useState, useEffect } from 'react'
 import whitePawn from './images/pawnWhite.png'
 import blackPawn from './images/pawnBlack.png'
 
+const firstPlayer = 'white'
+const secondPlayer = 'black'
+const possibleMove = 'orange'
+const activeTile = 'green'
+const killMove = 'blue'
+const wrongMoveKill = 'red'
+
 ////////////////////////////////////////////////////////
 //css
 ////////////////////////////////////////////////////////
@@ -26,6 +33,7 @@ export const s = {
     textShadow: theme.effects.textShadow,
     fontSize: theme.main.font.xl,
     marginBottom: theme.main.spacing.md,
+    letterSpacing: theme.main.spacing.xxs,
   }),
   blackButton: css({
     background: theme.color.primaryBackgroundStart,
@@ -40,6 +48,7 @@ export const s = {
   cell: css({
     width: '40px',
     height: '40px',
+    display: 'inline-block',
   }),
   img: css({
     width: '90%',
@@ -76,7 +85,7 @@ export const Checkers = () => {
   const SetUnitColor = rowIndex => {
     let newUnit
 
-    newUnit = rowIndex < 2 ? 'white' : '' || rowIndex > 5 ? 'black' : ''
+    newUnit = rowIndex < 2 ? firstPlayer : '' || rowIndex > 5 ? secondPlayer : ''
 
     return newUnit
   }
@@ -94,9 +103,9 @@ export const Checkers = () => {
 
           const unitColor = SetUnitColor(rowIndex)
           let imgUrl
-          if (unitColor === 'white') {
+          if (unitColor === firstPlayer) {
             imgUrl = whitePawn
-          } else if (unitColor === 'black') {
+          } else if (unitColor === secondPlayer) {
             imgUrl = blackPawn
           }
 
@@ -156,13 +165,13 @@ export const Checkers = () => {
             !document
               .getElementById(Number(id))
               .outerHTML.toLowerCase()
-              .includes(activeFirstPlayer ? 'white' : 'black')
+              .includes(activeFirstPlayer ? firstPlayer : secondPlayer)
           ) {
             if (
               GetRowIndex(id) + 1 === GetRowIndex(id + moveShift) ||
               GetRowIndex(id) - 1 === GetRowIndex(id + moveShift)
             ) {
-              document.getElementById(Number(id + moveShift)).style.backgroundColor = 'blue'
+              document.getElementById(Number(id + moveShift)).style.backgroundColor = killMove
             }
           }
         }
@@ -171,14 +180,14 @@ export const Checkers = () => {
   }
 
   const Deselect = (unitID, leftTileID, rightTileID) => {
-    ChangeTileColor(unitID, 'white')
+    ChangeTileColor(unitID, firstPlayer)
 
     if (GetColumnIndex(unitID) !== 0) {
-      ChangeTileColor(leftTileID, 'white')
+      ChangeTileColor(leftTileID, firstPlayer)
     }
 
     if (GetColumnIndex(unitID) !== 7) {
-      ChangeTileColor(rightTileID, 'white')
+      ChangeTileColor(rightTileID, firstPlayer)
     }
 
     let checkLeftJump = activeFirstPlayer ? columns * 2 - 2 : -(columns * 2 - 2)
@@ -186,22 +195,22 @@ export const Checkers = () => {
 
     if (Number(unitID) + checkLeftJump >= 0 && Number(unitID) + checkLeftJump < columns * rows) {
       if (
-        document.getElementById(Number(unitID) + checkLeftJump).style.backgroundColor === 'blue'
+        document.getElementById(Number(unitID) + checkLeftJump).style.backgroundColor === killMove
       ) {
-        ChangeTileColor(Number(unitID) + checkLeftJump, 'white')
+        ChangeTileColor(Number(unitID) + checkLeftJump, firstPlayer)
       }
     }
     if (Number(unitID) + checkRightJump >= 0 && Number(unitID) + checkRightJump < columns * rows) {
       if (
-        document.getElementById(Number(unitID) + checkRightJump).style.backgroundColor === 'blue'
+        document.getElementById(Number(unitID) + checkRightJump).style.backgroundColor === killMove
       ) {
-        ChangeTileColor(Number(unitID) + checkRightJump, 'white')
+        ChangeTileColor(Number(unitID) + checkRightJump, firstPlayer)
       }
     }
   }
 
   const Move = e => {
-    if (e.style.backgroundColor === 'orange' || e.style.backgroundColor === 'blue') {
+    if (e.style.backgroundColor === possibleMove || e.style.backgroundColor === killMove) {
       document.getElementById(previousSelect).innerHTML = ''
       if (GetColumnIndex(e.id) < GetColumnIndex(selectedLeftTile)) {
         document.getElementById(selectedLeftTile).innerHTML = ''
@@ -226,7 +235,7 @@ export const Checkers = () => {
 
   const Select = e => {
     if (!endGame) {
-      if (e.outerHTML.toLowerCase().includes(activeFirstPlayer ? 'white' : 'black')) {
+      if (e.outerHTML.toLowerCase().includes(activeFirstPlayer ? firstPlayer : secondPlayer)) {
         let isLefTile = CheckTile(e.id, -1)
         let isRightTile = CheckTile(e.id, 1)
 
@@ -245,22 +254,22 @@ export const Checkers = () => {
 
           setActiveMove(true)
 
-          ChangeTileColor(e.id, 'green')
+          ChangeTileColor(e.id, activeTile)
 
           if (GetColumnIndex(e.id) !== 0) {
             if (document.getElementById(isLefTile).innerHTML !== '') {
-              ChangeTileColor(isLefTile, 'red')
-              ChangeTileColor(isLefTile, 'blue', isPossibleLeftMove, 'left')
+              ChangeTileColor(isLefTile, wrongMoveKill)
+              ChangeTileColor(isLefTile, killMove, isPossibleLeftMove, 'left')
             } else {
-              ChangeTileColor(isLefTile, 'orange')
+              ChangeTileColor(isLefTile, possibleMove)
             }
           }
           if (GetColumnIndex(e.id) !== 7) {
             if (document.getElementById(isRightTile).innerHTML !== '') {
-              ChangeTileColor(isRightTile, 'red')
-              ChangeTileColor(isRightTile, 'blue', isPossibleRightMove, 'right')
+              ChangeTileColor(isRightTile, wrongMoveKill)
+              ChangeTileColor(isRightTile, killMove, isPossibleRightMove, 'right')
             } else {
-              ChangeTileColor(isRightTile, 'orange')
+              ChangeTileColor(isRightTile, possibleMove)
             }
           }
         }
@@ -290,7 +299,12 @@ export const Checkers = () => {
           }
         `}
       />
-      <h1 css={s.heading}>CHECKERS ♟️</h1>
+      <h1 css={s.heading}>
+        CHECKERS
+        <span css={s.cell}>
+          <img src={activeFirstPlayer ? whitePawn : blackPawn} alt='pawn' css={s.img} />
+        </span>
+      </h1>
       <table>
         <tbody>
           {grid.map((row, index) => (
