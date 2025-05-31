@@ -5,6 +5,11 @@ import ReactDOM from 'react-dom/client'
 
 import { useState, useEffect, useRef } from 'react'
 
+import body from './images/body.png'
+import food from './images/food.png'
+import head from './images/head.png'
+import redHead from './images/headRed.png'
+
 const mq = {
   // Mobile – 360 x 640; 375 x 667; 360 x 720.
   // iPhone – 375 x 812.
@@ -36,15 +41,31 @@ export const s = {
     fontFamily: "'Arial', sans-serif",
   }),
   cell: css({
-    width: theme.main.spacing.ml,
-    height: theme.main.spacing.ml,
+    width: '100%',
+    height: '100%',
+    minWidth: '100%',
+    minHeight: '100%',
     border: 'none',
     backgroundColor: 'transparent',
+    margin: 0,
+    padding: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
   }),
   playground: css({
     border: `2px solid ${theme.color.accentShadowDark}`,
     margin: theme.main.spacing.xs,
     borderRadius: theme.borderRadius.sm,
+    tableLayout: 'fixed',
+    borderCollapse: 'collapse',
+    '& td': {
+      width: theme.main.spacing.ml,
+      height: theme.main.spacing.ml,
+      padding: 0,
+      verticalAlign: 'middle',
+    },
   }),
   button: css({
     width: theme.main.spacing.xl,
@@ -159,62 +180,47 @@ export const Snake = () => {
 
   // end game
   const CheckSubmit = e => {
-    e.key ? (e = e.key.toLowerCase()) : (e = e.toLowerCase())
+    let key = e.key ? e.key.toLowerCase() : e.toLowerCase()
 
     if (!endGame) {
-      // left
-      if (e === 'a' || e === 'arrowleft') {
-        if (previousMove !== 'd' && previousMove !== 'arrowright') {
-          setPreviousMove(e)
+      let shift = 0
 
-          if (GetColumnIndex(snakeHead - 1) > GetColumnIndex(snakeHead) || snakeHead - 1 < 0) {
-            ChangeTileColor(snakeHead, 'red')
-            setEndGame(true)
-          } else {
-            PossibleMove(-1)
-          }
-        }
+      if (key === 'a' || key === 'arrowleft') {
+        shift = -1
+      } else if (key === 'd' || key === 'arrowright') {
+        shift = 1
+      } else if (key === 'w' || key === 'arrowup') {
+        shift = -columns
+      } else if (key === 's' || key === 'arrowdown') {
+        shift = columns
       }
-      // right
-      if (e === 'd' || e === 'arrowright') {
-        if (previousMove !== 'a' && previousMove !== 'arrowleft') {
-          setPreviousMove(e)
 
-          if (GetColumnIndex(snakeHead + 1) < GetColumnIndex(snakeHead)) {
-            ChangeTileColor(snakeHead, 'red')
-            setEndGame(true)
-          } else {
-            PossibleMove(1)
-          }
-        }
-      }
-      // up
-      if (e === 'w' || e === 'arrowup') {
-        if (previousMove !== 's' && previousMove !== 'arrowdown') {
-          setPreviousMove(e)
-
-          if (snakeHead - columns < 0) {
-            ChangeTileColor(snakeHead, 'red')
-            setEndGame(true)
-          } else {
-            PossibleMove(-columns)
-          }
-        }
-      }
-      // down
-      if (e === 's' || e === 'arrowdown') {
-        if (previousMove !== 'w' && previousMove !== 'arrowup') {
-          setPreviousMove(e)
-
-          if (snakeHead + columns > columns * rows - 1) {
-            ChangeTileColor(snakeHead, 'red')
-            setEndGame(true)
-          } else {
-            PossibleMove(columns)
-          }
+      if (shift !== 0) {
+        const collision = CheckCollision(shift)
+        if (collision) {
+          SetTileImage(snakeHead, 'redHead')
+          setEndGame(true)
+        } else {
+          PossibleMove(shift)
         }
       }
     }
+  }
+
+  const CheckCollision = shift => {
+    const newHead = snakeHead + shift
+
+    if (snakeBody.slice(1).includes(newHead)) return true
+
+    if (
+      newHead < 0 ||
+      newHead >= columns * rows ||
+      (shift === 1 && GetColumnIndex(newHead) === 0) ||
+      (shift === -1 && GetColumnIndex(newHead) === columns - 1)
+    )
+      return true
+
+    return false
   }
 
   const GetColumnIndex = id => {
@@ -222,25 +228,28 @@ export const Snake = () => {
   }
 
   const PossibleMove = shift => {
-    snakeBody.unshift(snakeHead + shift)
+    const newHead = snakeHead + shift
+    snakeBody.unshift(newHead)
 
-    if (document.getElementById(snakeHead + shift).style.backgroundColor !== 'orange') {
-      ChangeTileColor(snakeBody[snakeBody.length - 1], 'transparent')
+    const tile = document.getElementById(newHead)
+    const hasFood = tile && tile.querySelector('img[src*="food"]')
+
+    if (!hasFood) {
+      SetTileImage(snakeBody[snakeBody.length - 1], null)
       snakeBody.pop()
     } else {
       CreateFood()
     }
 
-    if (document.getElementById(snakeHead + shift).style.backgroundColor === 'green') {
-      ChangeTileColor(snakeHead + shift, 'red')
-      setEndGame(true)
-    } else {
-      ChangeTileColor(snakeHead + shift, 'green')
-      setSnakeHead(snakeHead + shift)
+    SetTileImage(newHead, 'head')
+
+    for (let i = 1; i < snakeBody.length; i++) {
+      SetTileImage(snakeBody[i], 'body')
     }
+
+    setSnakeHead(newHead)
   }
 
-  /////borders gridky/////
   /////snake/////
 
   const CreateSnake = () => {
@@ -248,10 +257,10 @@ export const Snake = () => {
 
     if ((rows * columns) % 2 === 0) {
       snakeHeadInit = Math.floor((rows * columns) / 2 - columns / 2)
-      ChangeTileColor(snakeHeadInit, 'green')
+      SetTileImage(snakeHeadInit, 'head')
     } else {
       snakeHeadInit = Math.floor((rows * columns - 1) / 2)
-      ChangeTileColor(snakeHeadInit, 'green')
+      SetTileImage(snakeHeadInit, 'head')
     }
 
     setSnakeHead(snakeHeadInit)
@@ -261,10 +270,30 @@ export const Snake = () => {
     CreateFood()
   }
 
-  // change color
-  const ChangeTileColor = (id, color) => {
-    document.getElementById(id).style.backgroundColor = color
+  //images
+  const SetTileImage = (id, type) => {
+    const tile = document.getElementById(id)
+    if (!tile) return
+    tile.style.backgroundColor = 'transparent'
+    if (type === 'head') {
+      tile.innerHTML = `<img src="${head}" alt="head" style="width:100%;height:100%;object-fit:contain;display:block;" />`
+    } else if (type === 'body') {
+      // Ak je to chvost (posledný segment)
+      if (id === snakeBody[snakeBody.length - 1]) {
+        tile.innerHTML = `<img src="${body}" alt="body" style="width:75%;height:75%;object-fit:contain;display:block;margin:auto;" />`
+      } else {
+        // Inak normálne telo
+        tile.innerHTML = `<img src="${body}" alt="body" style="width:100%;height:100%;object-fit:contain;display:block;" />`
+      }
+    } else if (type === 'food') {
+      tile.innerHTML = `<img src="${food}" alt="food" style="width:100%;height:100%;object-fit:contain;display:block;" />`
+    } else if (type === 'redHead') {
+      tile.innerHTML = `<img src="${redHead}" alt="redHead" style="width:100%;height:100%;object-fit:contain;display:block;" />`
+    } else {
+      tile.innerHTML = id
+    }
   }
+
   /////food/////
   const CreateFood = () => {
     let newFood = Math.floor(Math.random() * (columns * rows))
@@ -277,7 +306,7 @@ export const Snake = () => {
         CreateFood()
       }
     } else {
-      ChangeTileColor(newFood, 'orange')
+      SetTileImage(newFood, 'food')
     }
   }
 
