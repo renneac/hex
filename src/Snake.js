@@ -270,25 +270,22 @@ export const Snake = () => {
     CreateFood()
   }
 
-  //images
   const SetTileImage = (id, type) => {
     const tile = document.getElementById(id)
     if (!tile) return
     tile.style.backgroundColor = 'transparent'
     if (type === 'head') {
-      tile.innerHTML = `<img src="${head}" alt="head" style="width:100%;height:100%;object-fit:contain;display:block;" />`
+      tile.innerHTML = getImageHTML(head, 'head')
     } else if (type === 'body') {
-      // Ak je to chvost (posledný segment)
       if (id === snakeBody[snakeBody.length - 1]) {
-        tile.innerHTML = `<img src="${body}" alt="body" style="width:75%;height:75%;object-fit:contain;display:block;margin:auto;" />`
+        tile.innerHTML = getImageHTML(body, 'body', 'width:75%;height:75%;margin:auto;')
       } else {
-        // Inak normálne telo
-        tile.innerHTML = `<img src="${body}" alt="body" style="width:100%;height:100%;object-fit:contain;display:block;" />`
+        tile.innerHTML = getImageHTML(body, 'body')
       }
     } else if (type === 'food') {
-      tile.innerHTML = `<img src="${food}" alt="food" style="width:100%;height:100%;object-fit:contain;display:block;" />`
+      tile.innerHTML = getImageHTML(food, 'food')
     } else if (type === 'redHead') {
-      tile.innerHTML = `<img src="${redHead}" alt="redHead" style="width:100%;height:100%;object-fit:contain;display:block;" />`
+      tile.innerHTML = getImageHTML(redHead, 'redHead')
     } else {
       tile.innerHTML = id
     }
@@ -358,3 +355,9 @@ export const Snake = () => {
     </div>
   )
 }
+
+////////////////////////////////////////////////////////////////////////////////////
+//LOCAL COMPONENTS
+////////////////////////////////////////////////////////////////////////////////////
+const getImageHTML = (src, alt, style = '') =>
+  `<img src="${src}" alt="${alt}" style="width:100%;height:100%;object-fit:contain;display:block;${style}" />`
