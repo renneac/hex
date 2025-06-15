@@ -178,30 +178,52 @@ export const Snake = () => {
     CreateGrid()
   }
 
+  const getHeadRotation = direction => {
+    if (!direction) return 0
+
+    switch (direction) {
+      case 'right':
+        return 90
+      case 'down':
+        return 180
+      case 'left':
+        return 270
+      case 'up':
+        return 0
+      default:
+        return 0
+    }
+  }
+
   // end game
   const CheckSubmit = e => {
     let key = e.key ? e.key.toLowerCase() : e.toLowerCase()
 
     if (!endGame) {
       let shift = 0
+      let direction = null
 
       if (key === 'a' || key === 'arrowleft') {
         shift = -1
+        direction = 'left'
       } else if (key === 'd' || key === 'arrowright') {
         shift = 1
+        direction = 'right'
       } else if (key === 'w' || key === 'arrowup') {
         shift = -columns
+        direction = 'up'
       } else if (key === 's' || key === 'arrowdown') {
         shift = columns
+        direction = 'down'
       }
 
       if (shift !== 0) {
         const collision = CheckCollision(shift)
         if (collision) {
-          SetTileImage(snakeHead, 'redHead')
+          SetTileImage(snakeHead, 'redHead', direction) // PRIDAJ direction!
           setEndGame(true)
         } else {
-          PossibleMove(shift)
+          PossibleMove(shift, direction) // PRIDAJ direction!
         }
       }
     }
@@ -227,7 +249,7 @@ export const Snake = () => {
     return id % columns
   }
 
-  const PossibleMove = shift => {
+  const PossibleMove = (shift, direction) => {
     const newHead = snakeHead + shift
     snakeBody.unshift(newHead)
 
@@ -241,7 +263,7 @@ export const Snake = () => {
       CreateFood()
     }
 
-    SetTileImage(newHead, 'head')
+    SetTileImage(newHead, 'head', direction) // Tu už máš správne
 
     for (let i = 1; i < snakeBody.length; i++) {
       SetTileImage(snakeBody[i], 'body')
@@ -257,25 +279,26 @@ export const Snake = () => {
 
     if ((rows * columns) % 2 === 0) {
       snakeHeadInit = Math.floor((rows * columns) / 2 - columns / 2)
-      SetTileImage(snakeHeadInit, 'head')
+      SetTileImage(snakeHeadInit, 'head', 'up')
     } else {
       snakeHeadInit = Math.floor((rows * columns - 1) / 2)
-      SetTileImage(snakeHeadInit, 'head')
+      SetTileImage(snakeHeadInit, 'head', 'up')
     }
 
     setSnakeHead(snakeHeadInit)
-
     snakeBody.push(snakeHeadInit)
-
     CreateFood()
   }
 
-  const SetTileImage = (id, type) => {
+  //images
+  const SetTileImage = (id, type, direction = null) => {
     const tile = document.getElementById(id)
     if (!tile) return
     tile.style.backgroundColor = 'transparent'
+
     if (type === 'head') {
-      tile.innerHTML = getImageHTML(head, 'head')
+      const rotation = getHeadRotation(direction)
+      tile.innerHTML = getImageHTML(head, 'head', `transform: rotate(${rotation}deg);`)
     } else if (type === 'body') {
       if (id === snakeBody[snakeBody.length - 1]) {
         tile.innerHTML = getImageHTML(body, 'body', 'width:75%;height:75%;margin:auto;')
@@ -285,7 +308,8 @@ export const Snake = () => {
     } else if (type === 'food') {
       tile.innerHTML = getImageHTML(food, 'food')
     } else if (type === 'redHead') {
-      tile.innerHTML = getImageHTML(redHead, 'redHead')
+      const rotation = getHeadRotation(direction)
+      tile.innerHTML = getImageHTML(redHead, 'redHead', `transform: rotate(${rotation}deg);`)
     } else {
       tile.innerHTML = id
     }
