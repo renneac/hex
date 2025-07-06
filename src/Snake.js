@@ -10,6 +10,9 @@ import food from './images/food.png'
 import head from './images/head.png'
 import redHead from './images/headRed.png'
 
+import { HamburgerMenu } from './HamburgerMenu'
+import { ResetButton } from './Reusable'
+
 const mq = {
   // Mobile – 360 x 640; 375 x 667; 360 x 720.
   // iPhone – 375 x 812.
@@ -28,7 +31,7 @@ const mq = {
 ////////////////////////////////////////////////////////
 //css
 ////////////////////////////////////////////////////////
-export const s = {
+export const snakeStyles = {
   snakeContainer: css({
     height: theme.layout.fullScreenHeight,
     display: 'flex',
@@ -67,7 +70,7 @@ export const s = {
       verticalAlign: 'middle',
     },
   }),
-  button: css({
+  mainButton: css({
     width: theme.main.spacing.xl,
     height: theme.main.spacing.md,
     margin: theme.main.spacing.xs,
@@ -157,7 +160,7 @@ export const Snake = () => {
       for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
         for (let columnIndex = 0; columnIndex < columns; columnIndex++) {
           newTile = (
-            <button value={tileIndex} key={columnIndex} id={tileIndex} css={s.cell}>
+            <button value={tileIndex} key={columnIndex} id={tileIndex} css={snakeStyles.cell}>
               {tileIndex}
             </button>
           )
@@ -338,10 +341,11 @@ export const Snake = () => {
   }, [])
 
   return (
-    <div css={s.snakeContainer}>
+    <div css={snakeStyles.snakeContainer}>
+      <HamburgerMenu />
       <Global styles={theme.globalStyles} />
-      <h1 css={s.header}>Snake</h1>
-      <table css={s.playground}>
+      <h1 css={snakeStyles.header}>Snake</h1>
+      <table css={snakeStyles.playground}>
         <tbody>
           {grid.map((row, index) => (
             <tr key={index}>
@@ -352,30 +356,31 @@ export const Snake = () => {
           ))}
         </tbody>
       </table>
-      <button onKeyDown={CheckSubmit} css={s.button}>
+      <button onKeyDown={CheckSubmit} css={snakeStyles.mainButton}>
         START
       </button>
 
       {windowWidth < tabletBreakpoint && (
-        <div css={s.arrowContainer}>
+        <div css={snakeStyles.arrowContainer}>
           <div>
-            <button css={s.arrowButton} onClick={() => CheckSubmit('w')}>
+            <button css={snakeStyles.arrowButton} onClick={() => CheckSubmit('w')}>
               🡹
             </button>
           </div>
           <div>
-            <button css={s.arrowButton} onClick={() => CheckSubmit('a')}>
+            <button css={snakeStyles.arrowButton} onClick={() => CheckSubmit('a')}>
               🡸
             </button>
-            <button css={s.arrowButton} onClick={() => CheckSubmit('s')}>
+            <button css={snakeStyles.arrowButton} onClick={() => CheckSubmit('s')}>
               🡻
             </button>
-            <button css={s.arrowButton} onClick={() => CheckSubmit('d')}>
+            <button css={snakeStyles.arrowButton} onClick={() => CheckSubmit('d')}>
               🡺
             </button>
           </div>
         </div>
       )}
+      <ResetButton css={snakeStyles.mainButton} />
     </div>
   )
 }

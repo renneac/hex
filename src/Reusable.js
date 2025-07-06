@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react'
+import { css, ClassNames } from '@emotion/react'
 import * as theme from './theme'
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -22,6 +22,22 @@ export const s = {
   }),
 }
 
+export const resetButtonStyle = css({
+  backgroundColor: theme.color.accentColor,
+  color: theme.color.primaryBackgroundStart,
+  border: 'none',
+  fontSize: theme.main.font.lg,
+  marginTop: theme.main.spacing.md,
+  padding: `${theme.main.spacing.sm} ${theme.main.spacing.md}`,
+  borderRadius: theme.borderRadius.md,
+  cursor: 'pointer',
+  transition: theme.effects.transition.backgroundTransform,
+  '&:hover': {
+    backgroundColor: theme.color.accentShadowLight,
+    transform: theme.effects.scale.sm,
+  },
+})
+
 ////////////////////////////////////////////////////////////////////////////////////
 // MAIN
 ////////////////////////////////////////////////////////////////////////////////////
@@ -43,3 +59,17 @@ export const CreateGrid = (rows, columns) => {
 
   return grid
 }
+
+export const ResetButton = ({ css: cssProp, ...rest }) => (
+  <ClassNames>
+    {({ css }) => (
+      <button
+        className={css([resetButtonStyle, cssProp])}
+        onClick={() => window.location.reload()}
+        {...rest}
+      >
+        Reset
+      </button>
+    )}
+  </ClassNames>
+)

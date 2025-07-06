@@ -8,6 +8,9 @@ import { useState, useEffect } from 'react'
 import whitePawn from './images/pawnWhite.png'
 import blackPawn from './images/pawnBlack.png'
 
+import { HamburgerMenu } from './HamburgerMenu'
+import { ResetButton } from './Reusable'
+
 const firstPlayer = 'white'
 const secondPlayer = 'black'
 const possibleMove = 'orange'
@@ -292,6 +295,7 @@ export const Checkers = () => {
 
   return (
     <div css={s.container}>
+      <HamburgerMenu />
       <Global
         styles={css`
           body {
@@ -318,6 +322,7 @@ export const Checkers = () => {
           ))}
         </tbody>
       </table>
+      <ResetButton />
     </div>
   )
 }

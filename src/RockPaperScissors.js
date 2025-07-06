@@ -9,6 +9,9 @@ import rock from './images/rock.png'
 import paper from './images/paper.png'
 import scissors from './images/scissors.png'
 
+import { HamburgerMenu } from './HamburgerMenu'
+import { ResetButton } from './Reusable'
+
 ////////////////////////////////////////////////////////
 //css
 ////////////////////////////////////////////////////////
@@ -125,6 +128,7 @@ export const RockPaperScissors = () => {
 
   return (
     <div css={s.buttonContainer}>
+      <HamburgerMenu />
       <Global styles={theme.globalStyles} />
 
       <PlayButton name='Kameň' option={0} onClick={ProceedTurn} />
@@ -155,6 +159,7 @@ export const RockPaperScissors = () => {
       </p>
 
       <p css={s.resultText}>{result}</p>
+      <ResetButton />
     </div>
   )
 }

@@ -7,6 +7,9 @@ import { useState, useEffect } from 'react'
 
 import { CreateGrid } from './Reusable'
 
+import { HamburgerMenu } from './HamburgerMenu'
+import { ResetButton } from './Reusable'
+
 //////////////////////////////////////////////////////////////////////////////
 //// CSS
 //////////////////////////////////////////////////////////////////////////////
@@ -93,6 +96,7 @@ export const SealBreaker = () => {
 
   return (
     <div css={s.container}>
+      <HamburgerMenu />
       <h1 css={s.headerTurn}>Number of turns: {turns}</h1>
       <table>
         <Global styles={theme.globalStyles} />
@@ -108,6 +112,7 @@ export const SealBreaker = () => {
           ))}
         </tbody>
       </table>
+      <ResetButton />
     </div>
   )
 }

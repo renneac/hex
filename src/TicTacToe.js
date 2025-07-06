@@ -8,7 +8,9 @@ import { useState, useEffect } from 'react'
 import pumpkin from './images/pumpkin.png'
 import ghost from './images/ghost.png'
 
-import { CreateGrid } from './Reusable'
+import { CreateGrid, ResetButton } from './Reusable'
+
+import { HamburgerMenu } from './HamburgerMenu'
 
 //////////////////////////////////////////////////////////////////////////////
 //// CSS
@@ -105,6 +107,7 @@ export const TicTacToe = () => {
 
   return (
     <div css={s.buttonContainer}>
+      <HamburgerMenu />
       <h1 css={s.headerTurn}>{endGame ? (winner ? 'WINNER' : 'DRAW') : 'TURN'}</h1>
       <img src={endGame ? winner : isFirstPlayerTurn ? player1 : player2} alt='' />
       <table>
@@ -121,6 +124,7 @@ export const TicTacToe = () => {
           ))}
         </tbody>
       </table>
+      <ResetButton />
     </div>
   )
 }

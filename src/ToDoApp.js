@@ -5,6 +5,8 @@ import ReactDOM from 'react-dom/client'
 
 import { useEffect, useMemo, useState } from 'react'
 
+import { HamburgerMenu } from './HamburgerMenu'
+
 ////////////////////////////////////////////////////////
 //css
 ////////////////////////////////////////////////////////
@@ -257,6 +259,7 @@ export const ToDoApp = () => {
 
   return (
     <div css={s.body}>
+      <HamburgerMenu />
       <Global styles={theme.globalStyles} />
       <h1 css={s.mainHeader}>ToDoApp</h1>
       <div>
